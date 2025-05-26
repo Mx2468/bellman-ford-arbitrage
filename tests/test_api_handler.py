@@ -1,5 +1,5 @@
 import pytest
-from api.api_handler import APIHandler
+from src.api.api_handler import APIHandler
 
 @pytest.fixture
 def api_handler():
