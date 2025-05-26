@@ -1,7 +1,7 @@
 import pytest
 from collections import deque
-from src.graph.currency_graph import CurrencyGraph, Edge
-from src.path_algorithms.bellman_ford import BellmanFordFIFO
+from graph.currency_graph import CurrencyGraph, Edge
+from path_algorithms.bellman_ford import BellmanFordFIFO
 
 @pytest.fixture
 def graph_no_cycle():

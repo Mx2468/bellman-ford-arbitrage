@@ -1,6 +1,6 @@
 from collections import deque
 from typing import Dict, Tuple
-from src.graph.currency_graph import CurrencyGraph
+from graph.currency_graph import CurrencyGraph
 
 
 class BellmanFord:

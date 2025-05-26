@@ -1,6 +1,6 @@
 import pytest
 from math import log
-from src.graph.currency_graph import CurrencyGraph, Edge
+from graph.currency_graph import CurrencyGraph, Edge
 
 @pytest.fixture
 def empty_graph():
