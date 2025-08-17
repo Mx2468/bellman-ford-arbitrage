@@ -1,9 +1,9 @@
 import pytest
-from api.api_handler import APIHandler
+from api.api_handler import APIResponseHandler
 
 @pytest.fixture
 def api_handler():
-    return APIHandler()
+    return APIResponseHandler()
 
 @pytest.fixture
 def sample_response():

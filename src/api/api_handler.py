@@ -1,7 +1,8 @@
 import re
-from typing import Dict, Tuple, Union
+from typing import Dict, Tuple
 
-class APIHandler:
+class APIResponseHandler:
+    """ A base class to handle an abstract API response"""
     def __init__(self):
         # Regex for validating 3-letter currency codes
         self.currency_code_pattern = re.compile(r'^[A-Za-z]{3}$')
