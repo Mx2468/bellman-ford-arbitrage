@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 
-# TODO: Define a currency code type with appropriate validation 
+class CurrencyCodes(BaseModel):
+    currencies: set[str]
 
 class ForexDataWithBase(BaseModel):
     base: str
