@@ -8,13 +8,17 @@ LATEST_RATES_URL = f"{BASE_URL}/latest"
 
 #TODO: Add currency list validation (https://freecurrencyapi.com/docs/currency-list)
 
+
 class FreeCurrencyAPI:
     _key: Optional[str] = None
 
-    def __init__(self, key):
-        self._key = key 
+    def __init__(self, key=None):
+        if key:
+            self._key = key
+        else:
+            self._key = self.get_API_key()
 
-    def get_API_key(self):
+    def get_API_key(self) -> str:
         """
         Attempt to obtain the API key from either the passed in variable to the class, an auxillary file, or environment variables
         """
@@ -22,7 +26,7 @@ class FreeCurrencyAPI:
             return self._key
         else:
             try:
-                from src.api.api_keys import FreeCurrencyAPIKey
+                from api.api_keys import FreeCurrencyAPIKey
                 return FreeCurrencyAPIKey
             except:
                 try:
