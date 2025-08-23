@@ -54,7 +54,7 @@ class FreeCurrencyAPI:
 
     def get_exchange_rate_data(self, 
                                base_currency: str, 
-                               currencies_to_obtain: Optional[list[str]] = None) -> dict:
+                               currencies_to_obtain: Optional[tuple[str, ...]] = None) -> dict:
         """
         Obtains the latest exchange rate data
         
@@ -69,10 +69,14 @@ class FreeCurrencyAPI:
         """
         headers = {"apikey": self.get_API_key()}
         params = {"base_currency": base_currency,
-                  "currencies": str(currencies_to_obtain)}
+                  "currencies": ",".join(currencies_to_obtain)}
         if self.check_status():
             response = requests.get(LATEST_RATES_URL, headers=headers, params=params, timeout=30)
-            return response["data"]
+            print(response.json())
+            if response.status_code == 200:
+                return response.json()["data"]
+            else:
+                raise ConnectionError(f"The API returned an error: {response.json()['message']}")
         else:
             raise ConnectionError("Your API Quota has been exhausted")
 
