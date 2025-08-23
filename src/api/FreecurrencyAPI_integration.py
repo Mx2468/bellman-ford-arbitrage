@@ -81,4 +81,25 @@ class FreeCurrencyAPI:
             raise ConnectionError("Your API Quota has been exhausted")
 
 
+    def get_currency_list(self) -> list[str]:
+        """
+        Obtains the list of currencies supported by the API
+        """
+        headers = {"apikey": self.get_API_key()}
+        response = requests.get(CURRENCY_LIST_URL, headers=headers, timeout=30)
+        if response.status_code == 200:
+            return response.json()["data"].keys()
+        else:
+            raise ConnectionError(f"The API returned an error: {response.json()['message']}")
+
+
+    def validate_currencies(self, currencies_to_obtain: tuple[str, ...]) -> bool:
+        """
+        Validates the currencies to obtain
+        """
+        valid_currencies = self.get_currency_list()
+        for currency in currencies_to_obtain:
+            if currency not in valid_currencies:
+                raise ValueError(f"The currency {currency} is not supported by the API")
+        return True
 
