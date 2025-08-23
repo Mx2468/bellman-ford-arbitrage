@@ -1,7 +1,8 @@
 import requests
 import os
 from typing import Optional, Annotated
-from pydantic import BaseModel, Field, AfterValidator
+from pydantic import AfterValidator
+from data_model.currency_data import CurrencyCodes
 
 BASE_URL = "https://api.freecurrencyapi.com/v1"
 STATUS_URL = f"{BASE_URL}/status"
@@ -50,7 +51,7 @@ def validate_currencies(currency_codes: set[str]) -> set[str]:
     return currency_codes
 
 
-class CurrencyCodes(BaseModel):
+class FreeCurrencyAPICurrencyCodes(CurrencyCodes):
     currencies: Annotated[set[str], AfterValidator(validate_currencies)]
 
     def __str__(self) -> str:
