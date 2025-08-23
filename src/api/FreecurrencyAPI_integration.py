@@ -37,6 +37,12 @@ class FreeCurrencyAPI:
     def check_status(self) -> bool:
         """
         Checks the status of the API status endpoint to see if a successful call can be made
+        
+        Returns:
+            True if the API is available and can be called, False otherwise
+        
+        Raises:
+            ConnectionError: If the API is not available or the API Quota has been exhausted
         """
         response = requests.get(STATUS_URL, params={"apikey": self.get_API_key()}, timeout=5)
         if response.status_code == 200:
