@@ -34,18 +34,17 @@ class FreeCurrencyAPI:
                 except:
                     raise ValueError("The key has not been provided ")
 
-    def check_status(self):
+    def check_status(self) -> bool:
         """
         Checks the status of the API status endpoint to see if a successful call can be made
         """
         response = requests.get(STATUS_URL, params={"apikey": self.get_API_key()}, timeout=5)
-        remaining_calls = response["quotas"]["month"]["remaining"]
-        if remaining_calls < 20:
-            print(f"Warning: Your API quota only has {remaining_calls} calls remaining ")
-        elif remaining_calls == 0:
+        if response.status_code == 200:
+            return True
+        elif response.status_code == 429: #429 is the status code for rate limit exceeded
             raise ConnectionError("Your API Quota has been exhausted")
         else:
-            return remaining_calls > 0
+            raise ConnectionError(f"The API returned an {response.status_code} error")
 
     def get_exchange_rate_data(self, 
                                base_currency: str, 
