@@ -3,16 +3,16 @@ import os
 from typing import Optional, Annotated
 from pydantic import AfterValidator
 from data_model.currency_data import CurrencyCodes
+from dotenv import load_dotenv
+#TODO: Add to README the instructions for setting up the .env file
+load_dotenv()
 
 BASE_URL = "https://api.freecurrencyapi.com/v1"
 STATUS_URL = f"{BASE_URL}/status"
 LATEST_RATES_URL = f"{BASE_URL}/latest"
 CURRENCY_LIST_URL = f"{BASE_URL}/currencies"
 
-#TODO: Add currency list validation (https://freecurrencyapi.com/docs/currency-list)
-
-from api.api_keys import FreeCurrencyAPIKey
-FREECURRENCYAPI_KEY = FreeCurrencyAPIKey
+FREECURRENCYAPI_KEY = os.environ.get("FREECURRENCYAPI_KEY")
 
 def get_currency_list() -> set[str]:
     """
@@ -73,15 +73,10 @@ class FreeCurrencyAPI:
         """
         if self._key:
             return self._key
+        elif FREECURRENCYAPI_KEY:
+            return FREECURRENCYAPI_KEY
         else:
-            try:
-                from api.api_keys import FreeCurrencyAPIKey
-                return FreeCurrencyAPIKey
-            except:
-                try:
-                    return os.environ.get("FREECURRENCYAPI_KEY")
-                except:
-                    raise ValueError("The key has not been provided ")
+            raise ValueError("The key has not been provided ")
 
     def check_status(self) -> bool:
         """
@@ -138,7 +133,7 @@ def main():
     
     # Example: Get exchange rates for USD as base currency
     base_currency = "USD"
-    currencies_to_obtain = CurrencyCodes(currencies={"EUR", "GBP", "JPY", "CAD"})
+    currencies_to_obtain = FreeCurrencyAPICurrencyCodes(currencies={"EUR", "GBP", "JPY", "CAD"})
 
     print(f"Fetching exchange rates for {base_currency}...")
     exchange_data = api.get_exchange_rate_data(
