@@ -109,4 +109,13 @@ class CurrencyGraph:
         self.vertices.clear()
         self.edges.clear()
 
+    def print_graph(self) -> None:
+        """
+        Print the contents of the graph for debugging.
+        """
+        print("Vertices:", self.vertices)
+        print("Edges:")
+        for edge in self.edges:
+            print(f"  {edge.source} -> {edge.target}: {edge.weight}")
+
     # TODO: Future feature - Add a method to expand the graph with new pairs
