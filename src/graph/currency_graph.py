@@ -1,3 +1,4 @@
+# Start of Selection
 from dataclasses import dataclass
 from typing import Dict, Set, Tuple, List
 from math import log
@@ -32,9 +33,9 @@ class CurrencyGraph:
         """
         Add an edge to the graph.
         """
-        self.edges.add(edge)
         self.add_vertex(edge.source)
         self.add_vertex(edge.target)
+        self.edges.add(edge)
 
     def remove_edge(self, edge: Edge) -> None:
         """
@@ -118,4 +119,3 @@ class CurrencyGraph:
         for edge in self.edges:
             print(f"  {edge.source} -> {edge.target}: {edge.weight}")
 
-    # TODO: Future feature - Add a method to expand the graph with new pairs

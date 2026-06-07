@@ -14,6 +14,7 @@ CURRENCY_LIST_URL = f"{BASE_URL}/currencies"
 
 FREECURRENCYAPI_KEY = os.environ.get("FREECURRENCYAPI_KEY")
 
+#TODO: Allow API key to be passed in as a parameter
 def get_currency_list() -> set[str]:
     """
     Obtains the list of currencies supported by the API
@@ -114,6 +115,8 @@ class FreeCurrencyAPI:
         headers = {"apikey": self.get_API_key()}
         params = {"base_currency": base_currency,
                   "currencies": str(currencies_to_obtain)}
+        
+        print(f"Currencies to obtain: {params["currencies"]}")
         if self.check_status():
             response = requests.get(LATEST_RATES_URL, headers=headers, params=params, timeout=30)
             print(response.json())
@@ -133,7 +136,7 @@ def main():
     
     # Example: Get exchange rates for USD as base currency
     base_currency = "USD"
-    currencies_to_obtain = FreeCurrencyAPICurrencyCodes(currencies={"EUR", "GBP", "JPY", "CAD"})
+    currencies_to_obtain = FreeCurrencyAPICurrencyCodes()
 
     print(f"Fetching exchange rates for {base_currency}...")
     exchange_data = api.get_exchange_rate_data(
